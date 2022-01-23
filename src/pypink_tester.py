@@ -8,6 +8,8 @@ print(pypink.alphabet(lang='ru'))
 # This function prints russian alphabet.
 print(pypink.alphabet(lang='en'))
 # This function prints english alphabet (but with "lang" option).
+print('Hey, I generated random string for you: ' + pypink.random_string(length = 5))
+# This function generated random string with custom length and custom symbols list aviable.
 
 # ____________________________
 
