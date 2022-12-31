@@ -101,28 +101,24 @@ def is_empty(string = None, *args):
 def platform_name():
     return str(platform.system()).lower()
 def pip_install(lib: str, *args):
-    is_string_empty = is_empty(lib)
-    if not is_string_empty:
+    lib = str(lib)
+    if not is_empty(lib):
         if platform_name() == 'windows':
-            os.system('py -m ensurepip --upgrade || cls; pip install '+str(lib))
+            os.system('py -m ensurepip --upgrade || cls; pip install ' + lib)
         else:
-            os.system('python -m ensurepip --upgrade || clear; pip install '+str(lib))
-    else:
-        pass
-def crop_string(string = None, symbol = None, *args):
+            os.system('python -m ensurepip --upgrade || clear; pip install ' + lib)
+    else: return false
+def crop_string(string: str = '', symbol: str = '', *args):
     if type(string).__name__ == 'str' or type(symbol).__name__ == 'str':
         if is_empty(string) or is_empty(string):
             raise EmptyStringError('Excepted str, instead got '+str('NoneType with empty input'))
         else:
             Splitted_List = string.split(str(symbol))
             return Splitted_List
-    if 1==1:
-        if type(string).__name__ != 'str':
-            raise InvalidStringError('Excepted str, instead got '+str(type(string).__name__))
-        elif type(symbol).__name__ != 'str':
-            raise InvalidStringError('Excepted str, instead got '+str(type(symbol).__name__))
+        if not stringmngr_is_string(string): raise InvalidStringError('Excepted str, instead got ' + stringmngr_get_string_type(string))
+        elif not stringmngr_is_string(symbol): raise InvalidStringError('Excepted str, instead got ' + stringmngr_get_string_type(symbol))
         else:
-            if type(symbol).__name__ == 'str' or type(string).__name__ == 'str':
+            if stringmngr_is_string(string) or stringmngr_is_string(symbol):
                 pass
             else:
                 raise code_error('Unexpected error: expected str, instead got NoneType and got invalid input type')
@@ -134,30 +130,26 @@ def llama_sh(command = 'echo "llama_sh v.1.0.0"', *args):
             raise UnsupportedStringType('Excepted str, instead got '+str(type(command).__name__))
     except TypeError:
         raise TooManyNotStringsInString('Got too many invalid strings')
-def pr(pr, raw = False, *args):
-    if raw: pr = ''.join(r'{}'.format(pr))
-    if pr != '':
-        if str(type(pr).__name__) == 'str':
-            if raw: print(r'{}'.format(pr))
-            else: print(pr)
+def pr(s: str = '', no_newline: bool = False, *args) -> None:
+    if raw: s = ''.join(r'{}'.format(s))
+    if s != '':
+        if stringmngr_is_string(s):
+            print(s, end = '' if no_newline else '\n')
         else:
-            raise ValueError('Excepted "str".type, instead got "{}.type"; use str() or \'quotes\' converter instead'.format(str(type(pr).__name__)))
-    # A shorter and better version for "print"
+            raise ValueError('Excepted "str".type, instead got "{}.type"; use str() or \'quotes\' converter instead'.format(stringmngr_get_string_type(s))
 def is_from_blacklist(string, blacklist, *args):
     if string in blacklist:
         return True
     else:
         return False
-    # Simple blacklist engine
 def random_string(length = 0, custom_strings_list = [], *args):
     string = ''
-    strings_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g']
+    strings_list = alphabet()
     if len(custom_strings_list) <= 0:
         for x in range(length): string += choice(strings_list)
     else:
         for x in range(length): string += choice(custom_strings_list)
     return string
-    # Simple random string generator
 def custom_raise(raise_class = runtime_error, raise_description = '', exit_after = True, exit_code = 0, *args):
     try:
         print('The current program "'+str(get_program_name())+'" raises an error: ')
@@ -173,38 +165,21 @@ def custom_raise(raise_class = runtime_error, raise_description = '', exit_after
     except BaseException as e: err_crashed(code = e, confirmation = True)
 def get_program_name(*args):
     return str(os.path.basename(__file__))
-def err_crashed(code = None, confirmation = False, *NoneArgs_pass):
-    if confirmation: print('\033[0;31mpypink.Error: Crashed; "'+str(code)+str('"')+'\033[0m');exit()
-def alphabet(lang = 'en', *args):
-    def list_lang(lang):
-        en = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        ru = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
-        if lang == 'en':
-            return en
-        elif lang == 'ru':
-            return ru
-    if stringmngr_is_string(lang):
-        return list_lang(lang)
-    else: return False
-
-def stringmngr_is_string(string, *args):
-    if stringmngr_is_string_is_type(string, 'str'): return True
-    else: return False
-def stringmngr_is_int(string, *args):
-    if stringmngr_is_string_is_type(string, 'int'): return True
-    else: return False
-def stringmngr_is_float(string, *args):
-    if stringmngr_is_string_is_type(string, 'float'): return True
-    else: return False
-
-def stringmngr_is_string_is_type(string, is_type, *args):
-    if stringmngr_get_string_type(string) == is_type: return True
-    else: return False
+def err_crashed(code: str = '', confirmation: bool = False, exit_: bool = True, *NoneArgs_pass):
+    if confirmation and str(confirmation).strip().lower():
+        print('\033[0;31mpypink.Error: Crashed; "'+str(code)+str('"')+'\033[0m')
+        if exit_: exit()
+def alphabet(lang = en, upper: bool = True, *args):
+    l_en = 'abcdefghijklmnopqrstuvwxyz'
+    l_ru = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    if upper:
+        l_en += l_en.upper()
+        l_ru += l_ru.upper()
+    l_en = list(l_en)
+    l_ru = list(l_ru)
+    return l_en if lang == en else l_ru
+def stringmngr_is_string(string, *args): return stringmngr_is_stype(string, 'str')
+def stringmngr_is_int(string, *args): return stringmngr_is_stype(string, 'int')
+def stringmngr_is_float(string, *args): return stringmngr_is_stype(string, 'float')
+def stringmngr_is_stype(string, is_type, *args): return stringmngr_get_string_type(string) == is_type
 def stringmngr_get_string_type(string, *args): return str(type(string).__name__)
-'''AND ENDS HERE.'''
-
-'''TESTING AREA IS HERE'''
-
-# Enter your code here
-
-'''AND TESTING AREA ENDS HERE.'''
