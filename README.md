@@ -3,5 +3,6 @@ Library for Python that adds many functions, like more exceptions or "is_empty" 
 ## TODO
 - [ ] Fix documentation
 - [ ] Upload package to PyPi
-- [ ] Clean code more
+- [x] Clean code more
 - [x] Remove comments
+- [ ] [All](https://github.com/VBPROGER/pypink/issues/1) of this
