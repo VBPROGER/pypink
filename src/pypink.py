@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-'''INITIALIZATION CODE STARTS HERE'''
-
 ru, en = 'ru', 'en'
 
 import os, platform
@@ -8,45 +6,24 @@ from random import choice
 try:
     import atexit
 except ImportError:
-    raise ImportError('Library "atexit" isn'+"'"+'t installed.')
+    raise ImportError('Library "atexit" isn\'t installed.')
 class main_error(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class runtime_error(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class import_error(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class code_error(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class env_error(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
+    def __init__(self, pass_on_error: bool = True, *args) -> None:
+        self.pass_on_error, self._called_args = pass_on_error, args
+class runtime_error(main_error): pass
+class import_error(main_error): pass
+class code_error(main_error): pass
+class env_error(main_error): pass
 
-
-class EmptyStringError(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class InvalidStringError(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class InvalidStringType(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class UnsupportedStringType(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-class TooManyNotStringsInString(Exception):
-    def __init__(self, pass_on_error = True, *args) -> None:
-        pass
-
+class EmptyStringError(main_error): pass
+class InvalidStringError(main_error): pass
+class InvalidStringType(main_error): pass
+class UnsupportedStringType(main_error): pass
+class TooManyNotStringsInString(main_error): pass
 
 class env:
     env_list = ['none.temporary-env-file']
-    def __init__(self, *args) -> None:
-        pass
+    def __init__(self, *args) -> None: self._call_args = args
     def create(self = None, name = None, file = None, value = '', *args) -> None:
         if value == '' or name == '' or file == '' or value == None or name == None or file == None:
             raise env_error('env.create: env name / value / file name cannot be empty\nvalues: {NAME:"'+str(name)+'",FILE:"'+str(file)+'",VALUE:"'+str(value)+'"}')
@@ -60,46 +37,27 @@ class env:
             else:
                 raise env_error('env.create: env name / file name have been already declared\nvalues: {NAME:"'+str(name)+'",FILE_NAME:"'+str(file)+'"}')
 class __pypink__:
-    def __init__(self, *args) -> None:
-        pass
-    def exit_handler():
+    def __init__(self, *args) -> None: self._call_args = args
+    def exit_handler(self):
         try:
             for get_env in env.env_list:
-                try:
-                    os.remove(get_env)
-                except Exception:
-                    pass
-        except Exception:
-            pass
+                try: os.remove(get_env)
+                except BaseException as e: continue
+        except BaseException as e: return e
+__pypink__ = __pypink__()
 atexit._clear()
 atexit.register(__pypink__.exit_handler)
 
-'''AND ENDS HERE. MAIN CODE STARTS HERE'''
-
-def get_args(*args):
-    return args
-def clear_console(cross_platform = True, *args):
-    if cross_platform == True:
-        os.system('clear || cls || :')
-    else:
-        if os.name.lower() == 'posix':
-            os.system('clear')
-        else:
-            os.system('cls')
+def get_args(*args): return args
+def clear_console(cross_platform: bool = True, *args):
+    if cross_platform == True: os.system('clear || cls || :')
+    else: return os.system('clear') if os.name.lower() == 'posix' else os.system('cls')
 def capitalize(string = None, *args):
-    is_string_empty = is_empty(string)
-    if is_string_empty == False:
-        return string.capitalize()
-    else:
-        return False
+    if not is_empty(string): return string.capitalize()
+    else: return False
 def is_empty(string = None, *args):
-    if string == None or string == '':# or string.startswith(' ') and string.endswith(' '):
-                                    # Removed this part due bugs and glitches
-        return True
-    else:
-        return False
-def platform_name():
-    return str(platform.system()).lower()
+    return string == None or string == '' or not str(string).strip().lower():
+def platform_name(): return str(platform.system()).lower()
 def pip_install(lib: str, *args):
     lib = str(lib)
     if not is_empty(lib):
