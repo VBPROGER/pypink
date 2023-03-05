@@ -22,7 +22,8 @@ print('Hey, I generated random string for you: ' + pypink.random_string(length =
 
 # When you're done, you can type this:
 "pypink."
-# But without quotes. And after this you will see list of aviable commands.
+# But without quotes. And after this you will see list of aviable commands. (You will need an
+# IDE, like VSCode or PyCharm)
 
 # Happy coding!
-# VBPROGER, 2022. All rights reserved. ©
+# VBPROGER, 2023. All rights reserved. ©
