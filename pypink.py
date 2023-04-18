@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+__version__ = '0.0.1'
 ru, en = 'ru', 'en'
 
 import os, platform
