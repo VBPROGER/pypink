@@ -55,8 +55,7 @@ def clear_console(cross_platform: bool = True, *args):
 def capitalize(string = None, *args):
     if not is_empty(string): return string.capitalize()
     else: return False
-def is_empty(string = None, *args):
-    return string == None or string == '' or not str(string).strip().lower():
+def is_empty(string = None, *args): return ((not string) or string == '' or (not str(string).strip().lower()))
 def platform_name(): return str(platform.system()).lower()
 def pip_install(lib: str, *args):
     lib = str(lib)
