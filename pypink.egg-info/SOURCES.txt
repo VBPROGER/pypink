@@ -1,8 +1,0 @@
-LICENSE
-README.md
-setup.py
-pypink.egg-info/PKG-INFO
-pypink.egg-info/SOURCES.txt
-pypink.egg-info/dependency_links.txt
-pypink.egg-info/top_level.txt
-tests/test.py
