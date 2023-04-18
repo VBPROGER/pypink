@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from setuptools import setup
+from setuptools import setup, find_packages
 from pypink import __version__
 
 setup(
@@ -8,5 +8,6 @@ setup(
     url='https://github.com/VBPROGER/pypink',
     author='VBPROGER',
     author_email='',
-    py_modules=['pypink'],
+    py_modules=find_packages(),
+    install_requires=[]
 )

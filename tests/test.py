@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-import unittest, pydoc
+import unittest, pypink as lib
 from os import path
-def import_file(path: str = ''): return pydoc.importfile(path)
-lib = import_file(path.abspath(path.expanduser(path.expandvars(('src/pypink.py')))))
 
 class TestUtils(unittest.TestCase):
     def test_get_args(self):
