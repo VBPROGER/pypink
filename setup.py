@@ -8,7 +8,7 @@ setup(
     url='https://github.com/VBPROGER/pypink',
     author='VBPROGER',
     author_email='',
-    py_modules=find_packages(),
+    py_modules=find_packages('./pypink'),
     install_requires=[],
     license='MIT'
 )
