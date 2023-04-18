@@ -9,5 +9,6 @@ setup(
     author='VBPROGER',
     author_email='',
     py_modules=find_packages(),
-    install_requires=[]
+    install_requires=[],
+    license='MIT'
 )

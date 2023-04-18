@@ -3,9 +3,10 @@ Library for Python that adds many functions, like more exceptions or "is_empty" 
 ## Installing
 Run the following command in terminal:
 ```bash
-pip3 install git+git://github.com/VBPROGER/pypink.git#egg=pypink
+git clone https://github.com/VBPROGER/pypink.git; make && make clean
 ```
 Done! Now you can use this library. For more examples, go [here](https://github.com/VBPROGER/pypink/wiki/EN_Examples).
+After installation, you can delete the folder with repository.
 ## Wiki
 You can contribute to [wiki](https://github.com/VBPROGER/pypink/wiki) at any time.
 ## TODO
