@@ -85,7 +85,7 @@ def llama_sh(command = 'echo "llama_sh v.1.0.0"', *args):
             raise UnsupportedStringType('Excepted str, instead got '+str(type(command).__name__))
     except TypeError:
         raise TooManyNotStringsInString('Got too many invalid strings')
-def pr(s: str = '', no_newline: bool = False, *args) -> None:
+def pr(s: str = '', no_newline: bool = False, raw: bool = False, *args) -> None:
     if raw: s = ''.join(r'{}'.format(s))
     if s and stringmngr_is_string(s):
         print(s, end = '' if no_newline else '\n')
