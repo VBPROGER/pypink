@@ -61,11 +61,9 @@ def platform_name(): return str(platform.system()).lower()
 def pip_install(lib: str, *args):
     lib = str(lib)
     if not is_empty(lib):
-        if platform_name() == 'windows':
-            os.system('py -m ensurepip --upgrade || cls; pip install ' + lib)
-        else:
-            os.system('python -m ensurepip --upgrade || clear; pip install ' + lib)
-    else: return false
+        if platform_name() == 'windows': os.system('py -m ensurepip --upgrade || cls; pip install ' + lib)
+        else: os.system('python -m ensurepip --upgrade || clear; pip install ' + lib)
+    else: return False
 def crop_string(string: str = '', symbol: str = '', *args):
     if type(string).__name__ == 'str' or type(symbol).__name__ == 'str':
         if is_empty(string) or is_empty(string):
@@ -90,16 +88,11 @@ def llama_sh(command = 'echo "llama_sh v.1.0.0"', *args):
         raise TooManyNotStringsInString('Got too many invalid strings')
 def pr(s: str = '', no_newline: bool = False, *args) -> None:
     if raw: s = ''.join(r'{}'.format(s))
-    if s != '':
-        if stringmngr_is_string(s):
-            print(s, end = '' if no_newline else '\n')
-        else:
-            raise ValueError('Excepted "str".type, instead got "{}.type"; use str() or \'quotes\' converter instead'.format(stringmngr_get_string_type(s))
-def is_from_blacklist(string, blacklist, *args):
-    if string in blacklist:
-        return True
+    if s and stringmngr_is_string(s):
+        print(s, end = '' if no_newline else '\n')
     else:
-        return False
+        raise ValueError('Excepted "str".type, instead got "{}.type"; use str() or \'quotes\' converter instead'.format(stringmngr_get_string_type(s)))
+def is_from_blacklist(string, blacklist, *args): return (string in blacklist)
 def random_string(length = 0, custom_strings_list = [], *args):
     string = ''
     strings_list = alphabet()
